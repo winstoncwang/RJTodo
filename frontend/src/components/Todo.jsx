@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import withNavigationParams from './withNavigationParams';
 
@@ -11,12 +11,12 @@ class Todo extends Component {
         let WelcomeComponentWithParams = withNavigationParams(WelcomeComponent);
         return (
             <div className="TodoApp">
-                    <Routes>   
-                        <Route path="/" element={ <LoginComponentWithNavigate/> }/>
-                        <Route path="/login" element={ <LoginComponentWithNavigate/> }/>
-                        <Route path="/welcome/:name" element={ <WelcomeComponentWithParams/> } />
-                        <Route path="*" element={ <ErrorPage/> }/>
-                    </Routes>
+                <Routes>
+                    <Route path="/" element={<LoginComponentWithNavigate />} />
+                    <Route path="/login" element={<LoginComponentWithNavigate />} />
+                    <Route path="/welcome/:name" element={<WelcomeComponentWithParams />} />
+                    <Route path="*" element={<ErrorPage />} />
+                </Routes>
             </div>
         );
     }
@@ -55,28 +55,28 @@ class LoginComponent extends Component {
             this.props.navigate(`/welcome/${this.state.username}`);
         } else {
             console.log("login failed");
-            this.setState({showSuccessMessage:false});
-            this.setState({hasLoginFailed:true});
+            this.setState({ showSuccessMessage: false });
+            this.setState({ hasLoginFailed: true });
         }
     }
 
-  render() {
-    return (
-        <div>
-            { this.state.hasLoginFailed && <div>Invalid Credentials</div>}
-            { this.state.showSuccessMessage && <div>Login Successful</div>}
-            Username: <input type="text" name="username" value={this.state.username} onChange={this.handleOnChange} />
-            Password: <input type="password" name="password" value={ this.state.password } onChange={this.handleOnChange}/>
-            <button onClick={ this.loginClicked }>Login</button>
-      </div>
-    );
-  } 
+    render() {
+        return (
+            <div>
+                {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
+                {this.state.showSuccessMessage && <div>Login Successful</div>}
+                Username: <input type="text" name="username" value={this.state.username} onChange={this.handleOnChange} />
+                Password: <input type="password" name="password" value={this.state.password} onChange={this.handleOnChange} />
+                <button onClick={this.loginClicked}>Login</button>
+            </div>
+        );
+    }
 }
 
-class ErrorPage extends Component { 
-      render() { 
-          return (<div>Error Page 404</div>);
-      }
-  } 
+class ErrorPage extends Component {
+    render() {
+        return (<div>Error Page 404</div>);
+    }
+}
 
 export default Todo;
