@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import { Route, Routes } from 'react-router-dom'
-import withRouter from './withRouter';
+import withNavigationParams from './withNavigationParams';
 
+
+//react router v6 update
 class Todo extends Component {
 
     render() {
-        let LoginComponentWithNavigate = withRouter(LoginComponent);
-        let WelcomeComponentWithParams = withRouter(WelcomeComponent);
+        let LoginComponentWithNavigate = withNavigationParams(LoginComponent);
+        let WelcomeComponentWithParams = withNavigationParams(WelcomeComponent);
         return (
             <div className="TodoApp">
                     <Routes>   
@@ -15,53 +17,34 @@ class Todo extends Component {
                         <Route path="/welcome/:name" element={ <WelcomeComponentWithParams/> } />
                         <Route path="*" element={ <ErrorPage/> }/>
                     </Routes>
-                {/*<LoginComponent />*/}
             </div>
         );
     }
 }
-
-// function Todo() {
-//     let LoginComponentWithNavigate = withRouter(LoginComponent);
-//     let WelcomeComponentWithParams = withRouter(WelcomeComponent);
-//     return (
-//         <div className="TodoApp">
-//             <Routes>   
-//                 <Route path="/" element={ <LoginComponentWithNavigate/> }/>
-//                 <Route path="/login" element={ <LoginComponentWithNavigate/> }/>
-//                 <Route path="/welcome/:name" element={ <WelcomeComponentWithParams/> } />
-//                 <Route path="*" element={ <ErrorPage/> }/>
-//             </Routes>
-//         </div>
-//     );
-// }
 
 class WelcomeComponent extends Component {
 
     render() {
         return (
             <div>
-                Welcome to the page {this.props.router.params.name}
+                Welcome to the page {this.props.params.name}
             </div>
         );
     }
-    
 }
-
 
 class LoginComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'tom',
-            password: '',
+            username: 'test',
+            password: 'test',
             showSuccessMessage: false,
             hasLoginFailed: false
         }
     }
 
     handleOnChange = (e) => {
-        console.log(e.target.value);
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -69,9 +52,7 @@ class LoginComponent extends Component {
 
     loginClicked = () => {
         if (this.state.username === 'test' && this.state.password === 'test') {
-            this.props.router.navigate(`/welcome/${this.state.username}`);
-            // this.setState({ showSuccessMessage: true });
-            // this.setState({hasLoginFailed:false});
+            this.props.navigate(`/welcome/${this.state.username}`);
         } else {
             console.log("login failed");
             this.setState({showSuccessMessage:false});
@@ -82,9 +63,7 @@ class LoginComponent extends Component {
   render() {
     return (
         <div>
-            {/*<ShowInvalidCredentials hasLoginFailed={ this.state.hasLoginFailed }/>*/}
             { this.state.hasLoginFailed && <div>Invalid Credentials</div>}
-            {/*<ShowLoginSuccessful showSuccessMessage={this.state.showSuccessMessage} />*/}
             { this.state.showSuccessMessage && <div>Login Successful</div>}
             Username: <input type="text" name="username" value={this.state.username} onChange={this.handleOnChange} />
             Password: <input type="password" name="password" value={ this.state.password } onChange={this.handleOnChange}/>
