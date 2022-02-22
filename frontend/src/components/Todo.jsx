@@ -15,12 +15,57 @@ class Todo extends Component {
                     <Route path="/" element={<LoginComponentWithNavigate />} />
                     <Route path="/login" element={<LoginComponentWithNavigate />} />
                     <Route path="/welcome/:name" element={<WelcomeComponentWithParams />} />
+                    <Route path="/todos" element={<ListTodoComponent />} />
                     <Route path="*" element={<ErrorPage />} />
                 </Routes>
             </div>
         );
     }
 }
+
+class ListTodoComponent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            todos:
+                [
+                    { id: 1, description: 'Learn React' },
+                    { id: 2, description: 'Learn Java' },
+                    { id: 3, description: 'Build Web App' },
+                ]
+        }
+    }
+
+    todoMapping = () => {
+        return this.state.todos.map((todo) =>
+            <tr>
+                <td>{todo.id}</td>
+                <td>{todo.description}</td>
+            </tr>
+        )
+
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>List Tods</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.todoMapping()}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+}
+
 
 class WelcomeComponent extends Component {
 
