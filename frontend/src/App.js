@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import './App.css';
+
+import './style/App.css';
+import './style/Todo.css';
+
 import Todo from './components/Todo.jsx';
 
 class App extends Component {

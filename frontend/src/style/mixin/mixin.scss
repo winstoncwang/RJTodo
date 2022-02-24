@@ -1,0 +1,28 @@
+@import '../variable/variable.scss';
+
+@mixin header {
+    
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    background-color: $primaryColor;
+    height: 4vh;
+}
+
+@mixin body{
+    height:90vh;
+    background-color: $backgroundColor ;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+@mixin footer {
+    
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    background-color: $primaryColor;
+    height: 4vh;
+}
