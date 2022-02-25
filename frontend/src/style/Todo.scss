@@ -1,21 +1,17 @@
 @import "./variable/variable.scss";
 @import "./mixin/mixin.scss";
 
-
-.TodoApp{
-    .headerContainer{
-        @include header();
-    }
-    .loginPage{
-        @include body();
-    }
-    .welcomePage{
-        @include body();
-    }
-    .listPage{
-        @include body();
-    }
-    .footerContainer{
-        @include footer();
-    }
+.TodoApp {
+  .loginPage {
+    @include body();
+  }
+  .welcomePage {
+    @include body();
+  }
+  .listPage {
+    @include body();
+  }
+  .footerContainer {
+    @include footer();
+  }
 }

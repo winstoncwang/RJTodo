@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter } from "react-router-dom";
 
-import './style/App.css';
-import './style/Todo.css';
+import "./style/App.css";
+import "./style/Todo.css";
+import "./bootstrap.css";
 
-import Todo from './components/Todo.jsx';
+import Todo from "./components/Todo.jsx";
 
 class App extends Component {
   render() {
@@ -17,6 +18,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;

@@ -9,10 +9,8 @@ function withNavigationParams(Component) {
   return (props) => {
     let navigate = useNavigate();
     let params = useParams();
-    return (
-      <Component {...props} navigate={navigate} params={params} />
-    );
-  }
+    return <Component {...props} navigate={navigate} params={params} />;
+  };
 }
 
 export default withNavigationParams;
