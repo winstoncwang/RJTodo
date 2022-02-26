@@ -9,7 +9,7 @@
     @include body();
   }
   .listPage {
-    @include body();
+    height: 92vh;
   }
   .footerContainer {
     @include footer();

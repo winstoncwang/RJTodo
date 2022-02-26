@@ -13,6 +13,7 @@ class Todo extends Component {
         <Routes>
           <Route path="/" element={<LoginComponentWithNavigate />} />
           <Route path="/login" element={<LoginComponentWithNavigate />} />
+          <Route path="/logout" element={<LogoutComponent />} />
           <Route
             path="/welcome/:name"
             element={<WelcomeComponentWithParams />}
@@ -125,7 +126,6 @@ class ListTodoComponent extends Component {
   todoMapping = () => {
     return this.state.todos.map((todo) => (
       <tr>
-        <td>{todo.id}</td>
         <td>{todo.description}</td>
         <td>{todo.done.toString()}</td>
         <td>{todo.targetDate.toString()}</td>
@@ -135,16 +135,15 @@ class ListTodoComponent extends Component {
 
   render() {
     return (
-      <div className="listPage">
-        <h1>List Todos</h1>
-        <div>
-          <table>
-            <thead>
+      <div className="listPage container">
+        <h1 className="text-center my-4">List Todos</h1>
+        <div className="row justify-content-center">
+          <table className="table">
+            <thead className="thead-dark">
               <tr>
-                <th>id</th>
-                <th>description</th>
-                <th>Is Completed</th>
-                <th>Target Date</th>
+                <th scope="col">Description</th>
+                <th scope="col">Is Completed</th>
+                <th scope="col">Target Date</th>
               </tr>
             </thead>
             <tbody>{this.todoMapping()}</tbody>
@@ -198,25 +197,57 @@ class LoginComponent extends Component {
   render() {
     return (
       <div className="loginPage">
-        <div>
+        <div className="container">
           {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
           {this.state.showSuccessMessage && <div>Login Successful</div>}
-          Username:{" "}
-          <input
-            type="text"
-            name="username"
-            value={this.state.username}
-            onChange={this.handleOnChange}
-          />
-          Password:{" "}
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.handleOnChange}
-          />
-          <button onClick={this.loginClicked}>Login</button>
+          <form>
+            <div className="form-group col px-0">
+              <label for="username">Username</label>
+              <input
+                className="form-control"
+                type="text"
+                id="username"
+                name="username"
+                value={this.state.username}
+                onChange={this.handleOnChange}
+                placeholder="Username"
+              ></input>
+            </div>
+            <div className="form-group col px-0">
+              <label className="" for="password">
+                Password
+              </label>
+              <input
+                className="form-control"
+                type="password"
+                id="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleOnChange}
+                placeholder="Password"
+              ></input>
+            </div>
+            <div className="form-group form-check px-0 align-items-center">
+              <input type="checkbox" id="rememberMe" />
+              <label className="my-0 px-2" for="rememberMe">
+                Remember me
+              </label>
+            </div>
+            <button className="btn btn-dark" onClick={this.loginClicked}>
+              Login
+            </button>
+          </form>
         </div>
+      </div>
+    );
+  }
+}
+
+class LogoutComponent extends Component {
+  render() {
+    return (
+      <div className="text-center welcomePage">
+        You have successfully logged out!
       </div>
     );
   }
@@ -224,7 +255,7 @@ class LoginComponent extends Component {
 
 class ErrorPage extends Component {
   render() {
-    return <div>Error Page 404</div>;
+    return <div className="welcomePage">Error Page 404</div>;
   }
 }
 
