@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import withNavigationParams from "./withNavigationParams";
 
+import AuthenticationService from '../services/AuthenticationService.js';
+
 //react router v6 update
 class Todo extends Component {
   render() {
@@ -41,6 +43,10 @@ class HeaderComponent extends Component {
 
   render() {
     let show = this.state.menu ? "show" : "";
+
+    const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+    console.log(`${isUserLoggedIn ? "logged in" : "not logged in"}`);
+
     return (
       <header>
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
@@ -56,28 +62,28 @@ class HeaderComponent extends Component {
           </button>
           <div className={"collapse navbar-collapse " + show}>
             <ul className="navbar-nav">
-              <li>
+              {isUserLoggedIn && <li>
                 <Link className="nav-link " to="/welcome/Cong">
                   Home
                 </Link>
-              </li>
-              <li>
+              </li>}
+              {isUserLoggedIn && <li>
                 <Link className="nav-link " to="/todos">
                   Todos
                 </Link>
-              </li>
+              </li>}
             </ul>
             <ul className="navbar-nav navbar-collapse justify-content-end">
-              <li>
+              {!isUserLoggedIn && <li>
                 <Link className="nav-link " to="/login">
                   Login
                 </Link>
-              </li>
-              <li>
-                <Link className="nav-link " to="/logout">
+              </li>}
+              {isUserLoggedIn && <li>
+                <Link className="nav-link " to="/logout" onClick={AuthenticationService.logout}>
                   Logout
                 </Link>
-              </li>
+              </li>}
             </ul>
           </div>
         </nav>
@@ -125,7 +131,7 @@ class ListTodoComponent extends Component {
 
   todoMapping = () => {
     return this.state.todos.map((todo) => (
-      <tr>
+      <tr key={todo.id}>
         <td>{todo.description}</td>
         <td>{todo.done.toString()}</td>
         <td>{todo.targetDate.toString()}</td>
@@ -186,6 +192,7 @@ class LoginComponent extends Component {
 
   loginClicked = () => {
     if (this.state.username === "test" && this.state.password === "test") {
+      AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
       this.props.navigate(`/welcome/${this.state.username}`);
     } else {
       console.log("login failed");
@@ -195,6 +202,7 @@ class LoginComponent extends Component {
   };
 
   render() {
+
     return (
       <div className="loginPage">
         <div className="container">
@@ -202,7 +210,7 @@ class LoginComponent extends Component {
           {this.state.showSuccessMessage && <div>Login Successful</div>}
           <form>
             <div className="form-group col px-0">
-              <label for="username">Username</label>
+              <label htmlFor="username">Username</label>
               <input
                 className="form-control"
                 type="text"
@@ -214,7 +222,7 @@ class LoginComponent extends Component {
               ></input>
             </div>
             <div className="form-group col px-0">
-              <label className="" for="password">
+              <label className="" htmlFor="password">
                 Password
               </label>
               <input
@@ -229,7 +237,7 @@ class LoginComponent extends Component {
             </div>
             <div className="form-group form-check px-0 align-items-center">
               <input type="checkbox" id="rememberMe" />
-              <label className="my-0 px-2" for="rememberMe">
+              <label className="my-0 px-2" htmlFor="rememberMe">
                 Remember me
               </label>
             </div>
