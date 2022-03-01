@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import withNavigationParams from "./withNavigationParams";
 
-import AuthenticationService from '../services/AuthenticationService.js';
+import AuthenticationService from "../services/AuthenticationService.js";
+import AuthenticatedRoute from "./AuthenticatedRoute";
 
 //react router v6 update
 class Todo extends Component {
@@ -19,9 +20,20 @@ class Todo extends Component {
           <Route path="/logout" element={<LogoutComponent />} />
           <Route
             path="/welcome/:name"
-            element={<WelcomeComponentWithParams />}
+            element={
+              <AuthenticatedRoute>
+                <WelcomeComponentWithParams />
+              </AuthenticatedRoute>
+            }
           />
-          <Route path="/todos" element={<ListTodoComponent />} />
+          <Route
+            path="/todos"
+            element={
+              <AuthenticatedRoute>
+                <ListTodoComponent />
+              </AuthenticatedRoute>
+            }
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <FooterComponent />
@@ -63,28 +75,40 @@ class HeaderComponent extends Component {
           </button>
           <div className={"collapse navbar-collapse " + show}>
             <ul className="navbar-nav">
-              {isUserLoggedIn && <li>
-                <Link className="nav-link " to="/welcome/Cong">
-                  Home
-                </Link>
-              </li>}
-              {isUserLoggedIn && <li>
-                <Link className="nav-link " to="/todos">
-                  Todos
-                </Link>
-              </li>}
+              {isUserLoggedIn && (
+                <li>
+                  <Link className="nav-link " to="/welcome/Cong">
+                    Home
+                  </Link>
+                </li>
+              )}
+              {isUserLoggedIn && (
+                <li>
+                  <Link className="nav-link " to="/todos">
+                    Todos
+                  </Link>
+                </li>
+              )}
             </ul>
             <ul className="navbar-nav navbar-collapse justify-content-end">
-              {!isUserLoggedIn && <li>
-                <Link className="nav-link " to="/login">
-                  Login
-                </Link>
-              </li>}
-              {isUserLoggedIn && <li>
-                <Link className="nav-link " to="/logout" onClick={AuthenticationService.logout}>
-                  Logout
-                </Link>
-              </li>}
+              {!isUserLoggedIn && (
+                <li>
+                  <Link className="nav-link " to="/login">
+                    Login
+                  </Link>
+                </li>
+              )}
+              {isUserLoggedIn && (
+                <li>
+                  <Link
+                    className="nav-link "
+                    to="/logout"
+                    onClick={AuthenticationService.logout}
+                  >
+                    Logout
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </nav>
@@ -193,7 +217,10 @@ class LoginComponent extends Component {
 
   loginClicked = () => {
     if (this.state.username === "test" && this.state.password === "test") {
-      AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+      AuthenticationService.registerSuccessfulLogin(
+        this.state.username,
+        this.state.password
+      );
       this.props.navigate(`/welcome/${this.state.username}`);
     } else {
       console.log("login failed");
@@ -203,7 +230,6 @@ class LoginComponent extends Component {
   };
 
   render() {
-
     return (
       <div className="loginPage">
         <div className="container">
