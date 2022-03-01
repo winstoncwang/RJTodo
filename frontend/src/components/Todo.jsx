@@ -9,9 +9,10 @@ class Todo extends Component {
   render() {
     let LoginComponentWithNavigate = withNavigationParams(LoginComponent);
     let WelcomeComponentWithParams = withNavigationParams(WelcomeComponent);
+    let HeaderComponentWithNavigate = withNavigationParams(HeaderComponent);
     return (
       <div className="TodoApp">
-        <HeaderComponent />
+        <HeaderComponentWithNavigate />
         <Routes>
           <Route path="/" element={<LoginComponentWithNavigate />} />
           <Route path="/login" element={<LoginComponentWithNavigate />} />
